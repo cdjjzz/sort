@@ -1,5 +1,7 @@
 package com.sort;
 
+import java.util.Random;
+
 
 
 /**
@@ -8,13 +10,23 @@ package com.sort;
  */
 public class InsertSort {
 	
-	private static int[] sortSrc={4444,3333,2222,1111};
+	private static int length=5;
+	
+	private static int[] sortSrc=new int[length];
+	
+	static{
+		for (int i = 0; i <length; i++) {
+			Random random=new Random();
+			sortSrc[i]=random.nextInt();
+		}
+	}
 	
 	public static void main(String[] args) {
 		print(sortSrc);
-		sort();
+		//halfSort();
+		shellSort();
+		//sort();
 		print(sortSrc);
-		
 	}
 	
 	/**
@@ -30,24 +42,76 @@ public class InsertSort {
 	 * @throws
 	 */
 	public static void sort(){
-		int count=0;
+		long startTime=System.currentTimeMillis();
 		for(int i=1;i<sortSrc.length;i++){
-			boolean flag=false;
 			int temp=sortSrc[i];
 			int j=i;
-			while(j>0&&sortSrc[j-1]>temp){
+			while(j>0&&sortSrc[j-1]>temp){//在已排好序的数组中插入
 				sortSrc[j]=sortSrc[j-1];
 				j--;
-				count++;
-				flag=true;
 			}
-			if(!flag)
-			count++;
 			sortSrc[j]=temp;
 		}
-		System.out.println(count);
+		System.out.println(System.currentTimeMillis()-startTime);
 	}
-	
+	/**
+	 * 折半插入排序
+	 * @Title: halfSort 
+	 * @Description: TODO
+	 * @param 
+	 * @return void 
+	 * @throws
+	 */
+	public static void halfSort(){
+		long startTime=System.currentTimeMillis();
+		for(int i=1;i<sortSrc.length;i++){
+			int temp=sortSrc[i];
+			int begin=0;
+			int end=i-1;
+			while(begin<=end){//在已排好序的数组中二分查找应该插入的位置
+				int mid=(begin+end)>>1;
+				if(temp>sortSrc[mid]){
+					begin=mid+1;
+				}else{
+					end=mid-1;
+				}
+			}
+			//移动i 到begin之间的数据
+			 for (int j = i; j > begin; j--) {
+				 sortSrc[j] = sortSrc[j - 1];
+	         }
+			 sortSrc[begin]=temp;
+		}
+		System.out.println(System.currentTimeMillis()-startTime);
+	}
+	/**
+	 * 时间复杂度和稳定性
+	 * @Title: shellSort 
+	 * @Description: TODO
+	 * @param 
+	 * @return void 
+	 * @throws
+	 */
+	public static void shellSort(){
+		int h=1;//增量
+		while(h<=sortSrc.length/4){
+			h=h*4+1;
+		}
+		while(h>0){
+			System.out.println("当前h的值为："+h);
+			for(int i=h;i<sortSrc.length;i++){
+				int temp=sortSrc[i];
+				int j=i-h;
+				if(temp<sortSrc[j]){
+					for(;j>=0&&sortSrc[j]>temp;j-=h){
+						sortSrc[j+h]=sortSrc[j];
+					}
+					sortSrc[j + h] = temp;
+				}
+			}
+			h = (h - 1) / 4;
+		}
+	}
 	
 	
 	
