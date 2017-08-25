@@ -112,6 +112,30 @@ public class InsertSort {
 			h = (h - 1) / 4;
 		}
 	}
+	/**
+	 * 
+	 * @Title: sheSort 
+	 * @Description: TODO
+	 * @param 
+	 * @return void 
+	 * @throws
+	 */
+	public  static void sheSort(){
+		int d=sortSrc.length;
+		while(d>0){
+			d=d/3;
+			for(int i=0;i<d;i++){//组数
+				for(int j=i+d;j<sortSrc.length;j++){//组中的元素
+					int x=j-d;//取出最后一位有序元素位置
+					int temp=sortSrc[j];//要插入的元素
+					for(;x>=0&&sortSrc[x]>temp;x-=d){//比较有序元素是否大于要添加的元素，不大就前一位有序元素。
+						sortSrc[x+d]=sortSrc[x];//后移
+					}
+					sortSrc[x+d]=temp;
+				}
+			}
+		}
+	}
 	
 	
 	
