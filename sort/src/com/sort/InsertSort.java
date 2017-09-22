@@ -1,5 +1,7 @@
 package com.sort;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
@@ -22,11 +24,11 @@ public class InsertSort {
 	}
 	
 	public static void main(String[] args) {
-		print(sortSrc);
+		//print(sortSrc);
 		//halfSort();
-		shellSort();
+		//shellSort();
 		//sort();
-		print(sortSrc);
+		//print(sortSrc);
 	}
 	
 	/**
@@ -113,6 +115,29 @@ public class InsertSort {
 		}
 	}
 	/**
+	 * 选择排序
+	 * @Title: selectSort 
+	 * @Description: TODO
+	 * @param 
+	 * @return void 
+	 * @throws
+	 */
+	public static void selectSort(){
+		for (int i = 0; i < sortSrc.length-1; i++) {
+			int position=i;
+			int key=sortSrc[i];
+			for(int j=i+1;i<sortSrc.length;i++){
+				if(sortSrc[j]<key){
+					key=sortSrc[j];
+					position=j;
+				}
+			}
+			sortSrc[position]=sortSrc[i];
+			sortSrc[i]=key;
+		}
+		
+	}
+	/**
 	 * 
 	 * @Title: sheSort 
 	 * @Description: TODO
@@ -134,7 +159,11 @@ public class InsertSort {
 					sortSrc[x+d]=temp;
 				}
 			}
-		}
+		} 
+	}
+	
+	public void mergeSort(){
+		
 	}
 	
 	
