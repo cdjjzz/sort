@@ -2,16 +2,19 @@ package forkjoin;
 
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinPool.ManagedBlocker;
 import java.util.concurrent.TimeUnit;
 
 
 public class Main {
 			
+			@SuppressWarnings("static-access")
 			public static void main(String[] args) {
 				ForkJoinPool pool=new ForkJoinPool();
 				FolderProcessor system=new FolderProcessor("C:\\Windows",
 						"log");
 				FolderProcessor apps=new FolderProcessor("C:\\Program Files","log");
+				//apps.cancel(false);
 
 				FolderProcessor documents=new FolderProcessor("C:\\Documents And Settings","log");
 				pool.execute(system);
@@ -19,13 +22,29 @@ public class Main {
 				pool.execute(apps);
 
 				pool.execute(documents);
+				try {
+					pool.managedBlock(new ManagedBlocker() {
+						
+						@Override
+						public boolean isReleasable() {
+							return true;
+						}
+						
+						@Override
+						public boolean block() throws InterruptedException {
+							return true;
+						}
+					});
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
 				do {
-
+					
 					System.out.printf("******************************************\n");
 
-					System.out.printf("Main: Parallelism: %d\n",pool.
-
-					getParallelism());
+					System.out.printf("Main: Parallelism: %d\n",pool.getParallelism());
+					
+					//System.out.println(pool.getUncaughtExceptionHandler().getClass().getClassLoader());
 
 					System.out.printf("Main: Active Threads: %d\n",pool.
 
@@ -43,6 +62,7 @@ public class Main {
 
 					try {
 					  TimeUnit.SECONDS.sleep(1);
+					  
 					} catch (InterruptedException e) {
 					  e.printStackTrace();
 					}
