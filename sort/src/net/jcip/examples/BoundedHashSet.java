@@ -8,6 +8,8 @@ import java.util.concurrent.*;
  * <p/>
  * Using Semaphore to bound a collection
  *
+ * ±ÕËø  countdownLanch   
+ *
  * @author Brian Goetz and Tim Peierls
  */
 public class BoundedHashSet <T> {
@@ -20,7 +22,7 @@ public class BoundedHashSet <T> {
     }
 
     public boolean add(T o) throws InterruptedException {
-        sem.acquire();
+        sem.acquire();//»ñÈ¡Ðí¿É
         boolean wasAdded = false;
         try {
             wasAdded = set.add(o);
@@ -37,4 +39,17 @@ public class BoundedHashSet <T> {
             sem.release();
         return wasRemoved;
     }
+    public static void main(String[] args) throws InterruptedException{
+    	BoundedHashSet<String> boundedHashSet=new BoundedHashSet<String>(3);
+    	for (int i = 0; i < 10; i++) {
+			boundedHashSet.add("ÂÞÊ¢·á"+i);
+			boundedHashSet.remove("ÂÞÊ¢·á"+i);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "BoundedHashSet [set=" + set + ", sem=" + sem + "]";
+	}
+    
 }

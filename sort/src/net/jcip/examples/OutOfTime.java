@@ -1,7 +1,10 @@
 package net.jcip.examples;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static java.util.concurrent.TimeUnit.MINUTES;
 
 /**
  * OutOfTime
@@ -18,11 +21,14 @@ public class OutOfTime {
         SECONDS.sleep(1);
         timer.schedule(new ThrowTask(), 1);
         SECONDS.sleep(5);
+        //MINUTES.sleep(5);
+        System.out.println("1");
     }
 
     static class ThrowTask extends TimerTask {
         public void run() {
-            throw new RuntimeException();
+        	System.out.println("//////");
+           // throw new RuntimeException();
         }
     }
 }

@@ -12,7 +12,7 @@ import java.util.concurrent.*;
 public class CellularAutomata {
     private final Board mainBoard;
     private final CyclicBarrier barrier;
-    private final Worker[] workers;
+    private final Worker[] workers;//数组存放工作线程，实现线程池
 
     public CellularAutomata(Board board) {
         this.mainBoard = board;
@@ -26,7 +26,11 @@ public class CellularAutomata {
         for (int i = 0; i < count; i++)
             workers[i] = new Worker(mainBoard.getSubBoard(count, i));
     }
-
+    /**
+     * 工作线程
+     * @author pet-lsf
+     *
+     */
     private class Worker implements Runnable {
         private final Board board;
 
@@ -68,4 +72,48 @@ public class CellularAutomata {
         void waitForConvergence();
         Board getSubBoard(int numPartitions, int index);
     }
+    public static void main(String[] args) {
+    	CellularAutomata automata=new CellularAutomata(new Board() {
+			@Override
+			public void waitForConvergence() {
+				
+			}
+			
+			@Override
+			public int setNewValue(int x, int y, int value) {
+				return 0;
+			}
+			
+			@Override
+			public boolean hasConverged() {
+				return false;
+			}
+			
+			@Override
+			public int getValue(int x, int y) {
+				return 0;
+			}
+			
+			@Override
+			public Board getSubBoard(int numPartitions, int index) {
+				return null;
+			}
+			
+			@Override
+			public int getMaxY() {
+				return 0;
+			}
+			
+			@Override
+			public int getMaxX() {
+				return 0;
+			}
+			
+			@Override
+			public void commitNewValues() {
+				
+			}
+		});
+	}
+    
 }

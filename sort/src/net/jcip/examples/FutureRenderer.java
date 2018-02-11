@@ -16,6 +16,11 @@ public abstract class FutureRenderer {
 
     void renderPage(CharSequence source) {
         final List<ImageInfo> imageInfos = scanForImageInfo(source);
+        
+        
+        
+        
+        //读取所有的image
         Callable<List<ImageData>> task =
                 new Callable<List<ImageData>>() {
                     public List<ImageData> call() {
@@ -34,9 +39,9 @@ public abstract class FutureRenderer {
             for (ImageData data : imageData)
                 renderImage(data);
         } catch (InterruptedException e) {
-            // Re-assert the thread's interrupted status
+            // Re-assert the thread's interrupted status clear  status
             Thread.currentThread().interrupt();
-            // We don't need the result, so cancel the task too
+            // We don't need the result, so cancel the task too 取消线程池执行  如果线程已经执行或者
             future.cancel(true);
         } catch (ExecutionException e) {
             throw launderThrowable(e.getCause());

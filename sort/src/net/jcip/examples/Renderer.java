@@ -12,7 +12,7 @@ import static net.jcip.examples.LaunderThrowable.launderThrowable;
  * @author Brian Goetz and Tim Peierls
  */
 public abstract class Renderer {
-    private final ExecutorService executor;
+    private final ExecutorService executor;//指定执行器
 
     Renderer(ExecutorService executor) {
         this.executor = executor;
@@ -20,6 +20,7 @@ public abstract class Renderer {
 
     void renderPage(CharSequence source) {
         final List<ImageInfo> info = scanForImageInfo(source);
+        //CompletionService 使用executor 执行 
         CompletionService<ImageData> completionService =
                 new ExecutorCompletionService<ImageData>(executor);
         for (final ImageInfo imageInfo : info)
@@ -33,6 +34,7 @@ public abstract class Renderer {
 
         try {
             for (int t = 0, n = info.size(); t < n; t++) {
+            	//获取所有结果
                 Future<ImageData> f = completionService.take();
                 ImageData imageData = f.get();
                 renderImage(imageData);
