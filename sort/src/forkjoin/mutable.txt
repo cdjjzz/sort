@@ -1,0 +1,21 @@
+Compiled from "MutableS.java"
+public class forkjoin.MutableS {
+  public forkjoin.MutableS();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public synchronized int getValue();
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field value:I
+       4: ireturn
+
+  public synchronized void setValue(int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: putfield      #2                  // Field value:I
+       5: return
+}

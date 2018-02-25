@@ -10,7 +10,7 @@ import java.util.concurrent.*;
  * @author Brian Goetz and Tim Peierls
  */
 public class ThreadDeadlock {
-    ExecutorService exec = Executors.newSingleThreadExecutor();
+    static ExecutorService exec = Executors.newSingleThreadExecutor();
 
     public class LoadFileTask implements Callable<String> {
         private final String fileName;
@@ -40,4 +40,7 @@ public class ThreadDeadlock {
             return "";
         }
     }
+    public static void main(String[] args) {
+    	exec.submit(new ThreadDeadlock().new  RenderPageTask());
+	}
 }
