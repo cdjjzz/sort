@@ -40,6 +40,7 @@ public class SocketClient {
     	    socketChannel=SocketChannel.open();
     		socketChannel.configureBlocking(false);//设置非阻塞
     		selector=Selector.open();//
+    		//SelectionKey key=socketChannel.keyFor(selector);
     		//打开选择器并注册通道 在通道处注册事件 
     		socketChannel.register(selector, SelectionKey.OP_CONNECT);
     		socketChannel.connect(new InetSocketAddress("localhost",9901));
